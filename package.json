@@ -12,6 +12,9 @@
   "author": "coding ninjas",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.21.1"
+    "cookie-parser": "^1.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.1",
+    "mongoose": "^8.7.2"
   }
 }
