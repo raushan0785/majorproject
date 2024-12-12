@@ -6,7 +6,7 @@ app.use(express.urlencoded());
 app.use(cookieparser());
 //use express router
 app.use('/',require('./routes/index'));
-app.use('/',require('./routes/users'));
+app.use('/users',require('./routes/users'));
 //setup view engine
 app.set('view engine','ejs');
 app.set('views','./views');
