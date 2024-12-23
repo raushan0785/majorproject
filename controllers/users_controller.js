@@ -1,11 +1,34 @@
 const User = require('../models/user');
 
 // Render user profile page
-module.exports.profile = function(req, res){
-    return res.render('user_profile', {
-        title: 'User Profile'
-    });
-}
+module.exports.profile = function(req, res) {
+    // Check if the user_id cookie exists
+    if (req.cookies.user_id) {
+        // Use Mongoose's promise-based `findById`
+        User.findById(req.cookies.user_id)
+            .then(function(user) {
+                // If the user is found, render the profile page
+                if (user) {
+                    return res.render('user_profile', {
+                        title: "User Profile",
+                        user: user
+                    });
+                }
+
+                // If no user is found, redirect to sign-in
+                return res.redirect('/users/sign-in');
+            })
+            .catch(function(err) {
+                // Log the error and redirect to sign-in
+                console.error("Error finding user by ID:", err);
+                return res.redirect('/users/sign-in');
+            });
+    } else {
+        // If user_id cookie doesn't exist, redirect to sign-in
+        return res.redirect('/users/sign-in');
+    }
+};
+
 
 // Render the sign-up page
 module.exports.usersignup = function(req, res){
