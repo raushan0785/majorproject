@@ -1,15 +1,30 @@
 const User=require('../models/user');
 module.exports.usersignup=function(req,res){
-    return res.render('user_sign_up',{
-        title:'codeail|signup'})
-    };
+    if(req.isAuthenticated()){
+    return res.redirect('/users/profile');
+        
+    }
+    return res.render('user_sign_up', {
+        title: "Codeial | Sign Up"
+    });
+}
     
-
+    module.exports.profile = function(req, res){
+        return res.render('user_profile', {
+            title: 'User Profile'
+        })
+    }
 
 module.exports.usersignin=function(req,res){
-    return res.render('user_sign_in',{
-        title:'codeail|signin'})
-    };
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
+    return res.render('user_sign_in', {
+        title: "Codeial | Sign in"
+    });
+    
+    
+    }
     module.exports.create = function (req, res) {
         if (req.body.password !== req.body.confirm_password) {
             return res.redirect(req.get('Referrer') || '/');
@@ -32,6 +47,13 @@ module.exports.usersignin=function(req,res){
 
             });
     };
+    module.exports.createsession = function (req, res) {
+        // Check if res object exists and has the redirect method
+      
+            return res.redirect('/users/profile');
+       
+    };
+    
     
     
     
