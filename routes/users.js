@@ -1,16 +1,16 @@
-// users.js (Routes for user-related actions)
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const usercontroller = require('../controllers/users_controller');
 
-// Routes for user-related actions
+// Routes for user actions
 router.get('/profile', passport.checkAuthentication, usercontroller.profile);
 router.get('/sign-up', usercontroller.usersignup);
 router.get('/sign-in', usercontroller.usersignin);
 router.post('/create', usercontroller.create);
+router.get('/sign-out', usercontroller.destroysession);
 
-// Corrected create-session route
+// Login route
 router.post(
     '/create-session',
     passport.authenticate('local', { failureRedirect: '/users/sign-in' }),

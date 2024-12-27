@@ -32,8 +32,8 @@ app.use(
         }),
     })
 );
-app.use(Passport.initialize());
-app.use(Passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(passport.setAuthenticateduser);
 app.use('/',require('./routes/index'));
 app.use('/users',require('./routes/users'));
