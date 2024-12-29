@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%=title%></title>
+    <title><%= title %></title>
 </head>
 <body>
-    <h1>codeial/<%=title%></h1>
+    <h1>Welcome to Codeial</h1>
+    <% if (user) { %>
+        <a href="/users/profile">Profile</a>
+        <a href="/users/sign-out">Sign Out</a>
+    <% } else { %>
+        <a href="/users/sign-in">Sign In</a>
+        <a href="/users/sign-up">Sign Up</a>
+    <% } %>
 </body>
 </html>

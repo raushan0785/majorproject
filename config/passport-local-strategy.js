@@ -47,14 +47,15 @@ passport.deserializeUser((id, done) => {
             return done(err, false);
         });
 });
-passport.checkAuthentication=function(req,res,next){
-    if(req.isAuthenticated()){
+
+passport.checkAuthentication = function (req, res, next) {
+    if (req.isAuthenticated()) {
         return next();
     }
     return res.redirect('/users/sign-in');
-}
-passport.setAuthenticateduser = function (req, res, next) {
-    console.log(req.user);
+};
+
+passport.setAuthenticatedUser = function (req, res, next) {
     if (req.isAuthenticated()) {
         res.locals.user = req.user;
     }

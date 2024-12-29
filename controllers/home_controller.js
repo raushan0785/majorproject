@@ -1,9 +1,6 @@
-module.exports.home=function(req,res){
-    // Converts to a regular object
-    console.log(req.cookies);
-   return res.render('home',{
-    title:"home"
-   });
-    
-
-}
+module.exports.home = function (req, res) {
+    return res.render('home', {
+        title: 'Home',
+        user: req.user, // Pass the user object for conditional rendering
+    });
+};
