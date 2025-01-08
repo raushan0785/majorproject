@@ -9,6 +9,7 @@ const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
 const MongoStore = require('connect-mongo');
 const sassMiddleware = require('node-sass-middleware');
+const router=express.Router();
 
 // Use SASS middleware for styling
 app.use(
@@ -57,14 +58,17 @@ app.use(passport.session());
 app.use(passport.setAuthenticatedUser); // Apply passport middleware globally
 
 // Use express router
-app.use('/users', require('./routes/users'));
-app.get('/', (req, res) => {
-    res.render('home', {
-        title: 'Home Page',
-        user: req.user // Assuming `user` is defined elsewhere for conditional rendering
-    });
-});
+// app.use('/users', require('./routes/users'));
+// app.get('/', (req, res) => {
+//     res.render('home', {
+//         title: 'Home Page',
+//         user: req.user // Assuming `user` is defined elsewhere for conditional rendering
+//     });
+// });
 
+
+// router.use('/posts',require('./routes/posts'));
+app.use('/', require('./routes'));
 
 
 // Start the server
