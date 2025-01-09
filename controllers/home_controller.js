@@ -1,15 +1,25 @@
-const Post = require('../models/post'); // Assuming you have a Post model
+const Post = require('../models/post');
 
-module.exports.home = async function(req, res) {
+module.exports.home = async function (req, res) {
     try {
-        // Using async/await instead of .exec()
-        const posts = await Post.find({}).populate('user'); // Add .populate('user') if you want to get the user data too
+        // Populate comments with the user data
+        const posts = await Post.find({})
+            .populate('user')   // Populate user for the post
+            .populate({
+                path: 'comments',
+                populate: {
+                    path: 'user',  // Populate user for each comment
+                    select: 'name' // Only select the 'name' field
+                }
+            })
+            .exec();
+
         return res.render('home', {
             title: 'Home Page',
-            posts: posts // Pass posts to the view
+            posts: posts
         });
     } catch (err) {
         console.log('Error in fetching posts:', err);
-        return res.status(500).send('Internal Server Error');
+        return res.redirect('/');
     }
 };

@@ -23,3 +23,30 @@ module.exports.create = async function(req, res) {
         return res.status(500).send('Internal Server Error');
     }
 };
+module.exports.destroy = function(req, res) {
+    Post.findById(req.params.id)
+        .then((post) => {
+            if (!post) {
+                console.log('Post not found');
+                return res.redirect('back');
+            }
+
+            // Assuming the user can delete only their own posts
+            if (post.user.toString() !== req.user.id) {
+                console.log('Unauthorized attempt to delete a post');
+                return res.redirect('back');
+            }
+
+            // Delete the post
+            return Post.deleteOne({ _id: req.params.id });
+        })
+        .then(() => {
+            console.log('Post deleted successfully');
+            return res.redirect('back');
+        })
+        .catch((err) => {
+            console.log('Error in deleting the post:', err);
+            return res.redirect('back');
+        });
+};
+
