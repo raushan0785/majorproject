@@ -31,3 +31,40 @@ module.exports.create = async function (req, res) {
         return res.redirect('/');
     }
 };
+       // Import the Post model
+
+       module.exports.destroy = async function(req, res) {
+        console.log('Destroy route hit!'); // Log to confirm the route is accessed
+        console.log('Comment ID:', req.params.id); 
+    
+        try {
+            // Find the comment by ID
+            const comment = await Comment.findById(req.params.id);
+    
+            if (!comment) {
+                console.log('Comment not found');
+                return res.redirect('back');
+            }
+    
+            // Check if the logged-in user is the author of the comment
+            if (comment.user.toString() === req.user.id) {
+                const postId = comment.post;
+    
+                // Remove the comment
+                await comment.deleteOne();  // Use deleteOne instead of remove
+    
+                // Pull the comment ID from the associated post's comments array
+                await Post.findByIdAndUpdate(postId, { $pull: { comments: req.params.id } });
+    
+                console.log('Comment deleted successfully');
+                return res.redirect('back');
+            } else {
+                console.log('Unauthorized attempt to delete comment');
+                return res.redirect('back');
+            }
+        } catch (err) {
+            console.log('Error in deleting the comment:', err);
+            return res.redirect('back');
+        }
+    };
+    

@@ -8,5 +8,6 @@ console.log('commentsController:', commentsController); // Check if the controll
 
 // Route for creating a comment
 router.post('/create', passport.checkAuthentication, commentsController.create);
+router.get('/destroy/:id', passport.checkAuthentication, commentsController.destroy);
 
 module.exports = router;
