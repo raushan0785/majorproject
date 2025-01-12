@@ -7,13 +7,13 @@ Secure sign-up and login using Passport.js, with email/password authentication.
 Users can create, view, and delete posts.
 ## 3. Friends List:
 Users can view their friends and interact with them via links to their profiles.
-## Profile Picture Management: 
+## 4. Profile Picture Management: 
 Users can upload and update their profile pictures using Multer for file handling.
-## 4. Flash Messages:
+## 5. Flash Messages:
 Success and error messages displayed with Noty.js.
-## 5. Responsive Design:
+## 6. Responsive Design:
 The user interface adjusts to various screen sizes and devices.
-## 6. Real-time Interaction:
+## 7. Real-time Interaction:
 Users can engage with posts and friends in real-time
 # Installation
 ## Prerequisites
