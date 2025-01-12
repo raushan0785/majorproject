@@ -30,6 +30,7 @@ app.use(express.static('./assets'));
 app.use('/css', express.static('./assets/css'));
 
 app.use(expressLayouts);
+app.use('/uploads', express.static(__dirname + '/uploads'));
 // Extract style and scripts from sub-pages into the layout
 app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);

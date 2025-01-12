@@ -6,6 +6,7 @@
     <title>User Profile</title>
     <link rel="stylesheet" href="/css/layout.css">
     <link rel="stylesheet" href="/css/user_profile.css">
+    <img src="<%= user.avatar %>" alt="<%= user.name %>" width="100">
 </head>
 <body>
     <h1>Codeial / Profile Page</h1>
@@ -20,9 +21,10 @@
             </li>
             <% if (user && user.id === profile_user.id) { %>
                 <!-- Show the form if the logged-in user matches the profile_user -->
-                <form action="/users/update/<%= profile_user.id %>" method="POST">
+                <form action="/users/update/<%= profile_user.id %>" enctype="multipart/form-data" method="POST">
                     <input type="text" name="name" placeholder="Your Name" value="<%= profile_user.name %>" required>
                     <input type="email" name="email" placeholder="Your Email" value="<%= profile_user.email %>" required>
+                    <input type="file" name="avatar" placeholder="profile picture">
                     <input type="submit" value="Update">
                 </form>
             <% } %> <!-- End of form display logic -->

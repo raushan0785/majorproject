@@ -1,4 +1,6 @@
 const User = require('../models/user');
+const fs = require('fs'); // Import the File System module
+const path = require('path'); 
 
 // Render the profile page
 module.exports.profile = async function (req, res) {
@@ -19,30 +21,47 @@ module.exports.profile = async function (req, res) {
         return res.status(500).send('Internal Server Error');
     }
 };
-module.exports.update = async function (req, res) {
-    try {
-        // Check if the user is trying to update their own profile
-        if (req.user.id == req.params.id) {
-            // Update the user profile using async/await
-            const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
-                new: true, // This ensures the updated document is returned
-                runValidators: true // This ensures validation is applied during the update
+module.exports.update = async function(req, res){
+   
+
+    if(req.user.id == req.params.id){
+
+        try{
+
+            let user = await User.findById(req.params.id);
+            User.uploadedAvatar(req, res, function(err){
+                if (err) {console.log('*****Multer Error: ', err)}
+                
+                user.name = req.body.name;
+                user.email = req.body.email;
+
+                if (req.file){
+
+                    if (user.avatar){
+                        fs.unlinkSync(path.join(__dirname, '..', user.avatar));
+                    }
+
+
+                    // this is saving the path of the uploaded file into the avatar field in the user
+                    user.avatar = User.avatarPath + '/' + req.file.filename;
+                }
+                user.save();
+                return res.redirect('back');
             });
 
-            if (!updatedUser) {
-                return res.status(404).send('User not found');
-            }
-
-            return res.redirect('back'); // Redirect back after the update
-        } else {
-            // If the user is trying to update someone else's profile, send a 401 Unauthorized error
-            return res.status(401).send('Unauthorized');
+        }catch(err){
+            req.flash('error', err);
+            return res.redirect('back');
         }
-    } catch (err) {
-        console.error('Error updating user profile:', err);
-        return res.status(500).send('Internal Server Error');
+
+
+    }else{
+        req.flash('error', 'Unauthorized!');
+        return res.status(401).send('Unauthorized');
     }
-};
+}
+
+
 
 // Render the sign-up page
 module.exports.usersignup = function (req, res) {
