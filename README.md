@@ -7,6 +7,8 @@ Secure sign-up and login using Passport.js, with email/password authentication.
 Users can create, view, and delete posts.
 ## 3. Friends List:
 Users can view their friends and interact with them via links to their profiles.
+## Profile Picture Management: 
+Users can upload and update their profile pictures using Multer for file handling.
 ## 4. Flash Messages:
 Success and error messages displayed with Noty.js.
 ## 5. Responsive Design:
@@ -28,7 +30,7 @@ Make sure you have the following installed:
 * `views/`: EJS templates for rendering dynamic HTML content.
 * `routes/`: Define the routes for user actions such as login, posts, etc.
 * `assets/`: Contains SCSS for styling and compiled CSS files.
-* 
+
 # Technologies Used
 ### Node.js: 
 JavaScript runtime to run server-side code.
@@ -44,5 +46,7 @@ Templating engine for rendering dynamic HTML views.
 A lightweight JavaScript library to show notification messages.
 ### SCSS: 
 Sassy CSS for more advanced styling options.
+### Multer: 
+Middleware for handling file uploads (e.g., profile pictures).
 ### Flash Messages: 
 Display success or error messages after actions (login, registration, etc.).
